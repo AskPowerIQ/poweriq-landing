@@ -1,85 +1,1058 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>PowerIQ</title>
+  <meta
+    name="description"
+    content="PowerIQ provides clear electrical advice, quote reviews, DB board photo assessments, inverter guidance, and practical WhatsApp-based support before you approve electrical work."
+  />
   <style>
+    :root {
+      --bg: #081223;
+      --bg-2: #0d1b33;
+      --panel: rgba(255, 255, 255, 0.06);
+      --panel-solid: #0f1c34;
+      --panel-light: #f6f9fc;
+      --text: #ffffff;
+      --muted: #b8c4d8;
+      --dark-text: #122033;
+      --line: rgba(255, 255, 255, 0.12);
+      --blue: #20a4ff;
+      --blue-2: #4bc0ff;
+      --green: #1fa855;
+      --yellow: #ffd84d;
+      --shadow: 0 18px 40px rgba(0, 0, 0, 0.22);
+      --radius: 18px;
+      --max: 1180px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
-      font-family: Arial, sans-serif;
       margin: 0;
-      background: #f8fafc;
-      color: #1e293b;
+      font-family: Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at top right, rgba(32, 164, 255, 0.18), transparent 28%),
+        linear-gradient(180deg, #07111f 0%, #0b1830 52%, #101e36 100%);
+      color: var(--text);
+      line-height: 1.6;
     }
-    .container {
-      max-width: 1000px;
-      margin: auto;
-      padding: 20px;
-    }
-    h1 {
-      font-size: 40px;
-      margin-bottom: 10px;
-    }
-    h2 {
-      margin-top: 40px;
-    }
-    .btn {
-      display: inline-block;
-      padding: 14px 22px;
-      background: #0f172a;
-      color: white;
+
+    a {
+      color: inherit;
       text-decoration: none;
-      border-radius: 10px;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .container {
+      width: min(var(--max), calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(12px);
+      background: rgba(6, 14, 28, 0.76);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .topbar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 14px 0;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .brand-logo {
+      width: 46px;
+      height: 46px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #ffffff 0%, #dce8ff 48%, #1fa6ff 100%);
+      color: #07111f;
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      font-size: 18px;
+      box-shadow: var(--shadow);
+      flex-shrink: 0;
+    }
+
+    .brand-text {
+      min-width: 0;
+    }
+
+    .brand-text h1 {
+      margin: 0;
+      font-size: 22px;
+      letter-spacing: 0.3px;
+      line-height: 1.1;
+    }
+
+    .brand-text p {
+      margin: 2px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .nav a {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .nav a:hover {
+      color: #fff;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 14px 22px;
+      border-radius: 12px;
+      font-weight: 700;
+      transition: 0.2s ease;
+      border: 1px solid transparent;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #1aa34a 0%, #26c25a 100%);
+      color: #fff;
+      box-shadow: 0 12px 24px rgba(22, 131, 59, 0.28);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.03);
+    }
+
+    .btn-secondary {
+      background: rgba(255,255,255,0.06);
+      border-color: rgba(255,255,255,0.12);
+      color: #fff;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255,255,255,0.1);
+    }
+
+    .hero {
+      padding: 72px 0 42px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 28px;
+      align-items: stretch;
+    }
+
+    .hero-copy,
+    .hero-panel {
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .hero-copy {
+      padding: 42px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.03)),
+        linear-gradient(135deg, rgba(22, 50, 92, 0.92), rgba(7, 17, 31, 0.95));
+      border: 1px solid rgba(255,255,255,0.08);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-copy::after {
+      content: "";
+      position: absolute;
+      inset: auto -80px -80px auto;
+      width: 220px;
+      height: 220px;
+      background: radial-gradient(circle, rgba(32, 164, 255, 0.28), transparent 65%);
+      pointer-events: none;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      margin-bottom: 18px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+      color: #d9e8ff;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.1px;
+      text-transform: uppercase;
+      border: 1px solid rgba(255,255,255,0.09);
+    }
+
+    .hero h2 {
+      margin: 0;
+      font-size: 52px;
+      line-height: 1.05;
+      letter-spacing: -1.5px;
+      max-width: 760px;
+    }
+
+    .hero h2 .blue {
+      color: var(--blue-2);
+    }
+
+    .hero-sub {
+      margin: 20px 0 26px;
+      font-size: 19px;
+      color: #d6e1f3;
+      max-width: 780px;
+    }
+
+    .hero-points {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin: 24px 0 30px;
+    }
+
+    .point {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      color: #e9f1ff;
+      font-size: 15px;
+      background: rgba(255,255,255,0.05);
+      padding: 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .point span {
+      color: #4dd08c;
+      font-weight: 700;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .hero-panel {
+      padding: 28px;
+      background:
+        linear-gradient(180deg, rgba(32,164,255,0.10), rgba(255,255,255,0.03)),
+        rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .hero-panel h3 {
+      margin: 0 0 12px;
+      font-size: 24px;
+    }
+
+    .hero-panel p {
+      margin: 0 0 18px;
+      color: var(--muted);
+    }
+
+    .stat-list {
+      display: grid;
+      gap: 14px;
       margin-top: 20px;
     }
-    .box {
-      background: white;
-      padding: 20px;
-      margin-top: 20px;
+
+    .stat {
+      padding: 16px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.07);
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 14px;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+
+    .stat span {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .section {
+      padding: 34px 0;
+    }
+
+    .section-light {
+      color: var(--dark-text);
+    }
+
+    .section-card {
+      background: #ffffff;
+      border-radius: 24px;
+      padding: 34px;
+      box-shadow: 0 18px 48px rgba(0, 0, 0, 0.18);
+    }
+
+    .section-head {
+      max-width: 760px;
+      margin-bottom: 28px;
+    }
+
+    .section-head .tag {
+      display: inline-block;
+      color: #0f4d82;
+      background: #e6f5ff;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 8px 12px;
+      border-radius: 999px;
+      margin-bottom: 12px;
+    }
+
+    .section-head h3 {
+      margin: 0 0 10px;
+      font-size: 38px;
+      line-height: 1.1;
+      color: #0e1b31;
+      letter-spacing: -1px;
+    }
+
+    .section-head p {
+      margin: 0;
+      color: #53627a;
+      font-size: 17px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .info-card {
+      background: var(--panel-light);
+      border: 1px solid #e4edf6;
+      border-radius: 18px;
+      padding: 22px;
+    }
+
+    .info-card h4 {
+      margin: 0 0 10px;
+      font-size: 20px;
+      color: #0f1c34;
+    }
+
+    .info-card p {
+      margin: 0;
+      color: #58667b;
+      font-size: 15px;
+    }
+
+    .checklist {
+      display: grid;
+      gap: 12px;
+    }
+
+    .check-item {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      padding: 14px 16px;
+      border-radius: 14px;
+      background: #f6f9fc;
+      border: 1px solid #e4edf6;
+      color: #24344d;
+      font-size: 15px;
+    }
+
+    .check-item strong {
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #24b8ff, #177cff);
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .step {
+      background: #f6f9fc;
+      border: 1px solid #e4edf6;
+      border-radius: 18px;
+      padding: 22px;
+    }
+
+    .step-number {
+      width: 38px;
+      height: 38px;
       border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      background: #0f1c34;
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      margin-bottom: 14px;
+    }
+
+    .step h4 {
+      margin: 0 0 8px;
+      color: #0f1c34;
+      font-size: 18px;
+    }
+
+    .step p {
+      margin: 0;
+      color: #58667b;
+      font-size: 15px;
+    }
+
+    .pricing {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .price-card {
+      border-radius: 20px;
+      padding: 24px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04)),
+        rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      box-shadow: var(--shadow);
+    }
+
+    .price-card.featured {
+      border-color: rgba(75, 192, 255, 0.36);
+      background:
+        linear-gradient(180deg, rgba(75,192,255,0.16), rgba(255,255,255,0.04)),
+        rgba(255,255,255,0.05);
+    }
+
+    .price-card .label {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #d8ebff;
+      background: rgba(255,255,255,0.08);
+      padding: 7px 10px;
+      border-radius: 999px;
+      margin-bottom: 12px;
+    }
+
+    .price-card h4 {
+      margin: 0 0 6px;
+      font-size: 24px;
+    }
+
+    .price {
+      font-size: 40px;
+      font-weight: 800;
+      letter-spacing: -1px;
+      margin: 10px 0 14px;
+      color: #fff;
+    }
+
+    .price small {
+      font-size: 15px;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .price-card p {
+      margin: 0 0 14px;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .price-card ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 10px;
+    }
+
+    .price-card li {
+      color: #e7f0ff;
+      font-size: 14px;
+      padding-left: 18px;
+      position: relative;
+    }
+
+    .price-card li::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: #4dd08c;
+      font-weight: 800;
+    }
+
+    .trust-band {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 20px;
+    }
+
+    .trust-item {
+      background: #f6f9fc;
+      border: 1px solid #e4edf6;
+      border-radius: 18px;
+      padding: 18px;
+    }
+
+    .trust-item h4 {
+      margin: 0 0 8px;
+      color: #0f1c34;
+      font-size: 18px;
+    }
+
+    .trust-item p {
+      margin: 0;
+      color: #596781;
+      font-size: 14px;
+    }
+
+    .note-grid {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 18px;
+    }
+
+    .note {
+      border-radius: 18px;
+      padding: 24px;
+      background: #f6f9fc;
+      border: 1px solid #e4edf6;
+      color: #20314a;
+    }
+
+    .note.warning {
+      background: #fff8e8;
+      border-color: #ffe29b;
+    }
+
+    .note h4 {
+      margin: 0 0 10px;
+      font-size: 20px;
+      color: #0f1c34;
+    }
+
+    .note p,
+    .note li {
+      color: #55657d;
+      font-size: 15px;
+    }
+
+    .note ul {
+      margin: 10px 0 0;
+      padding-left: 18px;
+    }
+
+    .cta {
+      padding: 30px 0 70px;
+    }
+
+    .cta-box {
+      border-radius: 24px;
+      padding: 34px;
+      background:
+        radial-gradient(circle at top right, rgba(32, 164, 255, 0.20), transparent 28%),
+        linear-gradient(135deg, #0f2140 0%, #091424 100%);
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 22px;
+      flex-wrap: wrap;
+    }
+
+    .cta-box h3 {
+      margin: 0 0 10px;
+      font-size: 34px;
+      line-height: 1.1;
+      letter-spacing: -1px;
+    }
+
+    .cta-box p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 17px;
+      max-width: 760px;
+    }
+
+    .footer {
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding: 24px 0 34px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .footer-grid {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 1100px) {
+      .hero-grid,
+      .note-grid,
+      .grid-3,
+      .grid-2,
+      .pricing,
+      .trust-band {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .steps {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .nav {
+        display: none;
+      }
+
+      .hero {
+        padding-top: 36px;
+      }
+
+      .hero-grid,
+      .grid-3,
+      .grid-2,
+      .steps,
+      .pricing,
+      .trust-band,
+      .note-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-copy,
+      .hero-panel,
+      .section-card,
+      .cta-box {
+        padding: 24px;
+      }
+
+      .hero h2 {
+        font-size: 36px;
+      }
+
+      .section-head h3,
+      .cta-box h3 {
+        font-size: 30px;
+      }
+
+      .hero-points {
+        grid-template-columns: 1fr;
+      }
+
+      .topbar-inner {
+        padding: 12px 0;
+      }
+
+      .brand-text h1 {
+        font-size: 20px;
+      }
     }
   </style>
 </head>
-
 <body>
 
-<div class="container">
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <div class="brand">
+        <div class="brand-logo">PIQ</div>
+        <div class="brand-text">
+          <h1>PowerIQ</h1>
+          <p>Smart Electrical Advice</p>
+        </div>
+      </div>
 
-  <h1>PowerIQ</h1>
-  <p><strong>Understand your electrical quote before you say yes.</strong></p>
+      <nav class="nav">
+        <a href="#services">Services</a>
+        <a href="#how-it-works">How it works</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#contact" class="btn btn-primary" style="padding: 11px 16px;">Message on WhatsApp</a>
+      </nav>
+    </div>
+  </header>
 
-  <p>
-    PowerIQ helps homeowners and businesses understand electrical quotes, inverter issues,
-    and power installations in plain language — so you can make the right decision with confidence.
-  </p>
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <div class="eyebrow">Independent WhatsApp-based guidance</div>
+          <h2>
+            Clear <span class="blue">electrical advice</span> before you approve the work.
+          </h2>
+          <p class="hero-sub">
+            PowerIQ helps homeowners, landlords and small businesses understand quotes, DB board concerns, inverter questions and electrical recommendations in plain language before money is spent.
+          </p>
 
-  <a class="btn" href="https://wa.me/27632897384">Message on WhatsApp</a>
+          <div class="hero-points">
+            <div class="point"><span>✓</span> Quote reviews and second opinions</div>
+            <div class="point"><span>✓</span> DB board photo assessments</div>
+            <div class="point"><span>✓</span> Solar and inverter guidance</div>
+            <div class="point"><span>✓</span> Clear answers on WhatsApp</div>
+          </div>
 
-  <div class="box">
-    <h2>How it works</h2>
-    <p>1. Send your quote, photos, or question on WhatsApp</p>
-    <p>2. PowerIQ reviews and explains it</p>
-    <p>3. You get clear, practical guidance</p>
-    <p>4. You decide with confidence</p>
-  </div>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="https://wa.me/27XXXXXXXXX">Message PowerIQ on WhatsApp</a>
+            <a class="btn btn-secondary" href="#services">View services</a>
+          </div>
+        </div>
 
-  <div class="box">
-    <h2>Services</h2>
-    <p><strong>Quick question:</strong> R50 – R75</p>
-    <p><strong>Quote review:</strong> R150</p>
-    <p><strong>Photo assessment:</strong> R250 – R350</p>
-  </div>
+        <aside class="hero-panel">
+          <div>
+            <h3>Built for trust, clarity and better decisions</h3>
+            <p>
+              PowerIQ is designed to give clients a calmer, clearer way to understand electrical work before approving it.
+            </p>
+          </div>
 
-  <div class="box">
-    <h2>Important</h2>
-    <p>
-      PowerIQ provides general guidance only. It does not replace an onsite electrician,
-      compliance certificate, or emergency service.
-    </p>
-  </div>
+          <div class="stat-list">
+            <div class="stat">
+              <strong>Real-world electrical experience behind the guidance</strong>
+              <span>Informed by years of practical work across installations, maintenance, fault-finding, backup power systems and project environments.</span>
+            </div>
+            <div class="stat">
+              <strong>Practical, plain-language explanations</strong>
+              <span>No unnecessary jargon. Just clear guidance on what the quote says, what looks reasonable and what should be clarified.</span>
+            </div>
+            <div class="stat">
+              <strong>Honest limits</strong>
+              <span>PowerIQ supports better decisions, but does not replace onsite emergency electrical work, legal testing or compliance certification.</span>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
 
-</div>
+    <section class="section section-light" id="services">
+      <div class="container section-card">
+        <div class="section-head">
+          <div class="tag">What PowerIQ helps with</div>
+          <h3>Professional guidance for the questions clients usually struggle with</h3>
+          <p>
+            The service is built around the kinds of decisions people often feel unsure about — especially when comparing quotes, trying to understand recommendations or wanting a second opinion before approving work.
+          </p>
+        </div>
+
+        <div class="grid-3">
+          <div class="info-card">
+            <h4>Quote Reviews</h4>
+            <p>Understand what an electrician’s quote likely includes, what may need clarification and whether the recommendation appears reasonable.</p>
+          </div>
+          <div class="info-card">
+            <h4>DB Board Photo Assessments</h4>
+            <p>Send photos of a visible installation or DB board and receive structured feedback on what stands out and what questions to ask next.</p>
+          </div>
+          <div class="info-card">
+            <h4>Solar & Inverter Guidance</h4>
+            <p>Get help understanding system suggestions, settings, upgrade proposals and common points of confusion before making a decision.</p>
+          </div>
+          <div class="info-card">
+            <h4>Electrical Second Opinions</h4>
+            <p>Useful when something feels unclear, the pricing seems inconsistent or the explanation from a contractor is difficult to understand.</p>
+          </div>
+          <div class="info-card">
+            <h4>COC-Related Guidance</h4>
+            <p>Understand what is usually involved, what should typically be checked and what information may still be needed before work is approved.</p>
+          </div>
+          <div class="info-card">
+            <h4>General WhatsApp Advice</h4>
+            <p>Fast, practical responses for straightforward electrical questions where a clearer explanation can help before taking the next step.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-light">
+      <div class="container section-card">
+        <div class="section-head">
+          <div class="tag">Why clients use PowerIQ</div>
+          <h3>Because electrical decisions can feel uncertain, technical and expensive</h3>
+          <p>
+            Many people do not know whether they are being overquoted, whether something is genuinely necessary or which questions they should be asking. PowerIQ exists to make those decisions clearer.
+          </p>
+        </div>
+
+        <div class="grid-2">
+          <div class="checklist">
+            <div class="check-item">
+              <div class="icon">1</div>
+              <div>
+                <strong>Understand the recommendation</strong>
+                Get a plain-language explanation instead of trying to interpret technical wording alone.
+              </div>
+            </div>
+            <div class="check-item">
+              <div class="icon">2</div>
+              <div>
+                <strong>Ask better questions</strong>
+                Know what to confirm with the contractor before approving work or paying for upgrades.
+              </div>
+            </div>
+            <div class="check-item">
+              <div class="icon">3</div>
+              <div>
+                <strong>Reduce uncertainty</strong>
+                A second set of informed eyes can help when pricing or recommendations feel unclear.
+              </div>
+            </div>
+          </div>
+
+          <div class="checklist">
+            <div class="check-item">
+              <div class="icon">4</div>
+              <div>
+                <strong>Get guidance quickly</strong>
+                WhatsApp-based support is often easier and faster than trying to organise a call-out immediately.
+              </div>
+            </div>
+            <div class="check-item">
+              <div class="icon">5</div>
+              <div>
+                <strong>Make smarter decisions</strong>
+                The goal is not pressure. The goal is clarity before money is spent.
+              </div>
+            </div>
+            <div class="check-item">
+              <div class="icon">6</div>
+              <div>
+                <strong>Know the limits upfront</strong>
+                PowerIQ is careful about what can and cannot be concluded remotely, which helps the service feel more credible and trustworthy.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="trust-band">
+          <div class="trust-item">
+            <h4>Clear pricing</h4>
+            <p>Simple service levels without hidden surprise charges.</p>
+          </div>
+          <div class="trust-item">
+            <h4>Plain language</h4>
+            <p>Guidance designed to be understandable, not overly technical.</p>
+          </div>
+          <div class="trust-item">
+            <h4>Practical experience</h4>
+            <p>Advice shaped by real-world electrical work, not generic scripts.</p>
+          </div>
+          <div class="trust-item">
+            <h4>Honest boundaries</h4>
+            <p>Remote guidance where appropriate, onsite referral where necessary.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-light" id="how-it-works">
+      <div class="container section-card">
+        <div class="section-head">
+          <div class="tag">How it works</div>
+          <h3>A simple process designed to remove confusion</h3>
+          <p>
+            The idea is not to complicate the process. It is to make the next decision easier.
+          </p>
+        </div>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-number">1</div>
+            <h4>Send your question</h4>
+            <p>Send your quote, photos or issue on WhatsApp with enough detail for a proper first review.</p>
+          </div>
+          <div class="step">
+            <div class="step-number">2</div>
+            <h4>PowerIQ reviews it</h4>
+            <p>The information is assessed and the key points are identified in plain language.</p>
+          </div>
+          <div class="step">
+            <div class="step-number">3</div>
+            <h4>Get practical guidance</h4>
+            <p>You receive clear feedback, helpful questions to ask and direction on what may need further checking.</p>
+          </div>
+          <div class="step">
+            <div class="step-number">4</div>
+            <h4>Decide with more confidence</h4>
+            <p>You move forward with better clarity on the work, the quote and the next best step.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="pricing">
+      <div class="container">
+        <div class="section-head" style="margin-bottom: 22px;">
+          <div class="tag" style="background: rgba(255,255,255,0.08); color: #d9e9ff;">Pricing</div>
+          <h3 style="color:#fff;">Simple starting prices for common PowerIQ services</h3>
+          <p style="color: var(--muted);">
+            Pricing can be refined later, but a clear starting structure helps the service feel professional and transparent from the beginning.
+          </p>
+        </div>
+
+        <div class="pricing">
+          <div class="price-card">
+            <div class="label">Starter</div>
+            <h4>Quick Question</h4>
+            <div class="price">R75</div>
+            <p>For a straightforward electrical, DB board or inverter-related question that needs a clear answer.</p>
+            <ul>
+              <li>WhatsApp-based response</li>
+              <li>Plain-language explanation</li>
+              <li>Best for quick clarity</li>
+            </ul>
+          </div>
+
+          <div class="price-card featured">
+            <div class="label">Most useful</div>
+            <h4>Quote Review</h4>
+            <div class="price">R150</div>
+            <p>For checking an electrician’s quote, understanding the recommendation and knowing what to clarify.</p>
+            <ul>
+              <li>Review of quoted work</li>
+              <li>Practical questions to ask</li>
+              <li>Helps compare and understand pricing</li>
+            </ul>
+          </div>
+
+          <div class="price-card">
+            <div class="label">Structured review</div>
+            <h4>DB Board Assessment</h4>
+            <div class="price">R250–R350</div>
+            <p>For photo-based review of visible installations, DB boards or concerns that need a more detailed response.</p>
+            <ul>
+              <li>Photo-based feedback</li>
+              <li>Clear next-step guidance</li>
+              <li>Useful before approving corrective work</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-light">
+      <div class="container section-card">
+        <div class="section-head">
+          <div class="tag">Important notes</div>
+          <h3>Clear boundaries help the service feel safer and more trustworthy</h3>
+          <p>
+            One of the biggest trust-builders for a new service is honesty about what it does and does not replace.
+          </p>
+        </div>
+
+        <div class="note-grid">
+          <div class="note">
+            <h4>What PowerIQ is designed for</h4>
+            <ul>
+              <li>Explaining quotes and recommendations in plain language</li>
+              <li>Giving a second opinion before work is approved</li>
+              <li>Helping clients ask better questions</li>
+              <li>Providing practical general guidance based on the information supplied</li>
+            </ul>
+          </div>
+
+          <div class="note warning">
+            <h4>What PowerIQ does not replace</h4>
+            <ul>
+              <li>Emergency fault attendance or dangerous live situations</li>
+              <li>Onsite diagnosis where physical testing is required</li>
+              <li>Compliance certification or legally required inspections</li>
+              <li>A qualified electrician attending when the issue is unsafe or urgent</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta" id="contact">
+      <div class="container">
+        <div class="cta-box">
+          <div>
+            <h3>Get clarity before you spend.</h3>
+            <p>
+              Send your quote, photos or question on WhatsApp and get practical electrical guidance designed to help you make a more confident decision.
+            </p>
+          </div>
+          <a class="btn btn-primary" href="https://wa.me/27632897384">Message PowerIQ on WhatsApp</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div>© PowerIQ</div>
+      <div>Smart Electrical Advice • WhatsApp-based guidance • Clear practical support</div>
+    </div>
+  </footer>
 
 </body>
 </html>
