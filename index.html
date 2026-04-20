@@ -1,1058 +1,417 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PowerIQ</title>
-  <meta
-    name="description"
-    content="PowerIQ provides clear electrical advice, quote reviews, DB board photo assessments, inverter guidance, and practical WhatsApp-based support before you approve electrical work."
-  />
-  <style>
-    :root {
-      --bg: #081223;
-      --bg-2: #0d1b33;
-      --panel: rgba(255, 255, 255, 0.06);
-      --panel-solid: #0f1c34;
-      --panel-light: #f6f9fc;
-      --text: #ffffff;
-      --muted: #b8c4d8;
-      --dark-text: #122033;
-      --line: rgba(255, 255, 255, 0.12);
-      --blue: #20a4ff;
-      --blue-2: #4bc0ff;
-      --green: #1fa855;
-      --yellow: #ffd84d;
-      --shadow: 0 18px 40px rgba(0, 0, 0, 0.22);
-      --radius: 18px;
-      --max: 1180px;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background:
-        radial-gradient(circle at top right, rgba(32, 164, 255, 0.18), transparent 28%),
-        linear-gradient(180deg, #07111f 0%, #0b1830 52%, #101e36 100%);
-      color: var(--text);
-      line-height: 1.6;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    img {
-      max-width: 100%;
-      display: block;
-    }
-
-    .container {
-      width: min(var(--max), calc(100% - 32px));
-      margin: 0 auto;
-    }
-
-    .topbar {
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      backdrop-filter: blur(12px);
-      background: rgba(6, 14, 28, 0.76);
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-    }
-
-    .topbar-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      padding: 14px 0;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      min-width: 0;
-    }
-
-    .brand-logo {
-      width: 46px;
-      height: 46px;
-      border-radius: 12px;
-      background: linear-gradient(135deg, #ffffff 0%, #dce8ff 48%, #1fa6ff 100%);
-      color: #07111f;
-      display: grid;
-      place-items: center;
-      font-weight: 800;
-      font-size: 18px;
-      box-shadow: var(--shadow);
-      flex-shrink: 0;
-    }
-
-    .brand-text {
-      min-width: 0;
-    }
-
-    .brand-text h1 {
-      margin: 0;
-      font-size: 22px;
-      letter-spacing: 0.3px;
-      line-height: 1.1;
-    }
-
-    .brand-text p {
-      margin: 2px 0 0;
-      color: var(--muted);
-      font-size: 12px;
-      letter-spacing: 1.4px;
-      text-transform: uppercase;
-    }
-
-    .nav {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-      flex-wrap: wrap;
-    }
-
-    .nav a {
-      color: var(--muted);
-      font-size: 14px;
-    }
-
-    .nav a:hover {
-      color: #fff;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      padding: 14px 22px;
-      border-radius: 12px;
-      font-weight: 700;
-      transition: 0.2s ease;
-      border: 1px solid transparent;
-      cursor: pointer;
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, #1aa34a 0%, #26c25a 100%);
-      color: #fff;
-      box-shadow: 0 12px 24px rgba(22, 131, 59, 0.28);
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-1px);
-      filter: brightness(1.03);
-    }
-
-    .btn-secondary {
-      background: rgba(255,255,255,0.06);
-      border-color: rgba(255,255,255,0.12);
-      color: #fff;
-    }
-
-    .btn-secondary:hover {
-      background: rgba(255,255,255,0.1);
-    }
-
-    .hero {
-      padding: 72px 0 42px;
-    }
-
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap: 28px;
-      align-items: stretch;
-    }
-
-    .hero-copy,
-    .hero-panel {
-      border-radius: 24px;
-      box-shadow: var(--shadow);
-    }
-
-    .hero-copy {
-      padding: 42px;
-      background:
-        linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.03)),
-        linear-gradient(135deg, rgba(22, 50, 92, 0.92), rgba(7, 17, 31, 0.95));
-      border: 1px solid rgba(255,255,255,0.08);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero-copy::after {
-      content: "";
-      position: absolute;
-      inset: auto -80px -80px auto;
-      width: 220px;
-      height: 220px;
-      background: radial-gradient(circle, rgba(32, 164, 255, 0.28), transparent 65%);
-      pointer-events: none;
-    }
-
-    .eyebrow {
-      display: inline-block;
-      margin-bottom: 18px;
-      padding: 8px 12px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.08);
-      color: #d9e8ff;
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 1.1px;
-      text-transform: uppercase;
-      border: 1px solid rgba(255,255,255,0.09);
-    }
-
-    .hero h2 {
-      margin: 0;
-      font-size: 52px;
-      line-height: 1.05;
-      letter-spacing: -1.5px;
-      max-width: 760px;
-    }
-
-    .hero h2 .blue {
-      color: var(--blue-2);
-    }
-
-    .hero-sub {
-      margin: 20px 0 26px;
-      font-size: 19px;
-      color: #d6e1f3;
-      max-width: 780px;
-    }
-
-    .hero-points {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 12px;
-      margin: 24px 0 30px;
-    }
-
-    .point {
-      display: flex;
-      gap: 10px;
-      align-items: flex-start;
-      color: #e9f1ff;
-      font-size: 15px;
-      background: rgba(255,255,255,0.05);
-      padding: 14px;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,0.08);
-    }
-
-    .point span {
-      color: #4dd08c;
-      font-weight: 700;
-    }
-
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-
-    .hero-panel {
-      padding: 28px;
-      background:
-        linear-gradient(180deg, rgba(32,164,255,0.10), rgba(255,255,255,0.03)),
-        rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.08);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .hero-panel h3 {
-      margin: 0 0 12px;
-      font-size: 24px;
-    }
-
-    .hero-panel p {
-      margin: 0 0 18px;
-      color: var(--muted);
-    }
-
-    .stat-list {
-      display: grid;
-      gap: 14px;
-      margin-top: 20px;
-    }
-
-    .stat {
-      padding: 16px;
-      border-radius: 16px;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.07);
-    }
-
-    .stat strong {
-      display: block;
-      font-size: 14px;
-      color: #fff;
-      margin-bottom: 6px;
-    }
-
-    .stat span {
-      color: var(--muted);
-      font-size: 14px;
-    }
-
-    .section {
-      padding: 34px 0;
-    }
-
-    .section-light {
-      color: var(--dark-text);
-    }
-
-    .section-card {
-      background: #ffffff;
-      border-radius: 24px;
-      padding: 34px;
-      box-shadow: 0 18px 48px rgba(0, 0, 0, 0.18);
-    }
-
-    .section-head {
-      max-width: 760px;
-      margin-bottom: 28px;
-    }
-
-    .section-head .tag {
-      display: inline-block;
-      color: #0f4d82;
-      background: #e6f5ff;
-      font-size: 12px;
-      font-weight: 800;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      padding: 8px 12px;
-      border-radius: 999px;
-      margin-bottom: 12px;
-    }
-
-    .section-head h3 {
-      margin: 0 0 10px;
-      font-size: 38px;
-      line-height: 1.1;
-      color: #0e1b31;
-      letter-spacing: -1px;
-    }
-
-    .section-head p {
-      margin: 0;
-      color: #53627a;
-      font-size: 17px;
-    }
-
-    .grid-3 {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 18px;
-    }
-
-    .grid-2 {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 18px;
-    }
-
-    .info-card {
-      background: var(--panel-light);
-      border: 1px solid #e4edf6;
-      border-radius: 18px;
-      padding: 22px;
-    }
-
-    .info-card h4 {
-      margin: 0 0 10px;
-      font-size: 20px;
-      color: #0f1c34;
-    }
-
-    .info-card p {
-      margin: 0;
-      color: #58667b;
-      font-size: 15px;
-    }
-
-    .checklist {
-      display: grid;
-      gap: 12px;
-    }
-
-    .check-item {
-      display: flex;
-      gap: 12px;
-      align-items: flex-start;
-      padding: 14px 16px;
-      border-radius: 14px;
-      background: #f6f9fc;
-      border: 1px solid #e4edf6;
-      color: #24344d;
-      font-size: 15px;
-    }
-
-    .check-item strong {
-      display: block;
-      margin-bottom: 2px;
-    }
-
-    .icon {
-      width: 28px;
-      height: 28px;
-      border-radius: 999px;
-      background: linear-gradient(135deg, #24b8ff, #177cff);
-      color: #fff;
-      display: grid;
-      place-items: center;
-      font-weight: 800;
-      flex-shrink: 0;
-      margin-top: 1px;
-    }
-
-    .steps {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 16px;
-    }
-
-    .step {
-      background: #f6f9fc;
-      border: 1px solid #e4edf6;
-      border-radius: 18px;
-      padding: 22px;
-    }
-
-    .step-number {
-      width: 38px;
-      height: 38px;
-      border-radius: 12px;
-      background: #0f1c34;
-      color: #fff;
-      display: grid;
-      place-items: center;
-      font-weight: 800;
-      margin-bottom: 14px;
-    }
-
-    .step h4 {
-      margin: 0 0 8px;
-      color: #0f1c34;
-      font-size: 18px;
-    }
-
-    .step p {
-      margin: 0;
-      color: #58667b;
-      font-size: 15px;
-    }
-
-    .pricing {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 18px;
-    }
-
-    .price-card {
-      border-radius: 20px;
-      padding: 24px;
-      background:
-        linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04)),
-        rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.1);
-      box-shadow: var(--shadow);
-    }
-
-    .price-card.featured {
-      border-color: rgba(75, 192, 255, 0.36);
-      background:
-        linear-gradient(180deg, rgba(75,192,255,0.16), rgba(255,255,255,0.04)),
-        rgba(255,255,255,0.05);
-    }
-
-    .price-card .label {
-      display: inline-block;
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      color: #d8ebff;
-      background: rgba(255,255,255,0.08);
-      padding: 7px 10px;
-      border-radius: 999px;
-      margin-bottom: 12px;
-    }
-
-    .price-card h4 {
-      margin: 0 0 6px;
-      font-size: 24px;
-    }
-
-    .price {
-      font-size: 40px;
-      font-weight: 800;
-      letter-spacing: -1px;
-      margin: 10px 0 14px;
-      color: #fff;
-    }
-
-    .price small {
-      font-size: 15px;
-      color: var(--muted);
-      font-weight: 700;
-    }
-
-    .price-card p {
-      margin: 0 0 14px;
-      color: var(--muted);
-      font-size: 15px;
-    }
-
-    .price-card ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      display: grid;
-      gap: 10px;
-    }
-
-    .price-card li {
-      color: #e7f0ff;
-      font-size: 14px;
-      padding-left: 18px;
-      position: relative;
-    }
-
-    .price-card li::before {
-      content: "•";
-      position: absolute;
-      left: 0;
-      color: #4dd08c;
-      font-weight: 800;
-    }
-
-    .trust-band {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 16px;
-      margin-top: 20px;
-    }
-
-    .trust-item {
-      background: #f6f9fc;
-      border: 1px solid #e4edf6;
-      border-radius: 18px;
-      padding: 18px;
-    }
-
-    .trust-item h4 {
-      margin: 0 0 8px;
-      color: #0f1c34;
-      font-size: 18px;
-    }
-
-    .trust-item p {
-      margin: 0;
-      color: #596781;
-      font-size: 14px;
-    }
-
-    .note-grid {
-      display: grid;
-      grid-template-columns: 1.05fr 0.95fr;
-      gap: 18px;
-    }
-
-    .note {
-      border-radius: 18px;
-      padding: 24px;
-      background: #f6f9fc;
-      border: 1px solid #e4edf6;
-      color: #20314a;
-    }
-
-    .note.warning {
-      background: #fff8e8;
-      border-color: #ffe29b;
-    }
-
-    .note h4 {
-      margin: 0 0 10px;
-      font-size: 20px;
-      color: #0f1c34;
-    }
-
-    .note p,
-    .note li {
-      color: #55657d;
-      font-size: 15px;
-    }
-
-    .note ul {
-      margin: 10px 0 0;
-      padding-left: 18px;
-    }
-
-    .cta {
-      padding: 30px 0 70px;
-    }
-
-    .cta-box {
-      border-radius: 24px;
-      padding: 34px;
-      background:
-        radial-gradient(circle at top right, rgba(32, 164, 255, 0.20), transparent 28%),
-        linear-gradient(135deg, #0f2140 0%, #091424 100%);
-      border: 1px solid rgba(255,255,255,0.08);
-      box-shadow: var(--shadow);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 22px;
-      flex-wrap: wrap;
-    }
-
-    .cta-box h3 {
-      margin: 0 0 10px;
-      font-size: 34px;
-      line-height: 1.1;
-      letter-spacing: -1px;
-    }
-
-    .cta-box p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 17px;
-      max-width: 760px;
-    }
-
-    .footer {
-      border-top: 1px solid rgba(255,255,255,0.08);
-      padding: 24px 0 34px;
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    .footer-grid {
-      display: flex;
-      justify-content: space-between;
-      gap: 16px;
-      flex-wrap: wrap;
-    }
-
-    @media (max-width: 1100px) {
-      .hero-grid,
-      .note-grid,
-      .grid-3,
-      .grid-2,
-      .pricing,
-      .trust-band {
-        grid-template-columns: 1fr 1fr;
-      }
-
-      .steps {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-
-    @media (max-width: 760px) {
-      .nav {
-        display: none;
-      }
-
-      .hero {
-        padding-top: 36px;
-      }
-
-      .hero-grid,
-      .grid-3,
-      .grid-2,
-      .steps,
-      .pricing,
-      .trust-band,
-      .note-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .hero-copy,
-      .hero-panel,
-      .section-card,
-      .cta-box {
-        padding: 24px;
-      }
-
-      .hero h2 {
-        font-size: 36px;
-      }
-
-      .section-head h3,
-      .cta-box h3 {
-        font-size: 30px;
-      }
-
-      .hero-points {
-        grid-template-columns: 1fr;
-      }
-
-      .topbar-inner {
-        padding: 12px 0;
-      }
-
-      .brand-text h1 {
-        font-size: 20px;
-      }
-    }
-  </style>
-</head>
-<body>
-
-  <header class="topbar">
-    <div class="container topbar-inner">
-      <div class="brand">
-        <div class="brand-logo">PIQ</div>
-        <div class="brand-text">
-          <h1>PowerIQ</h1>
-          <p>Smart Electrical Advice</p>
-        </div>
+export default function PowerIQLandingPage() {
+  const services = [
+    {
+      title: "Quick Fault Guide",
+      price: "R75",
+      desc: "For breaker trips, plug faults, flickering lights, inverter warnings, and common electrical concerns.",
+      detail: "Short WhatsApp guidance based on your description, photos, and basic safe checks.",
+    },
+    {
+      title: "Fault Finding Assist",
+      price: "R120",
+      desc: "For issues that need more back-and-forth to understand what may be happening.",
+      detail: "15-minute WhatsApp-based guided assessment for faults, warnings, and electrical concerns.",
+      featured: true,
+    },
+    {
+      title: "Quote Check",
+      price: "R150",
+      desc: "Understand if a quote looks fair, excessive, unclear, or missing important details.",
+      detail: "Plain-language review of electrician, inverter, solar, or DB-related quotes.",
+    },
+  ];
+
+  const faultExamples = [
+    "Breaker keeps tripping",
+    "Lights flickering",
+    "Plug or circuit not working",
+    "Inverter showing a warning",
+    "Battery not charging properly",
+    "Quote for DB or solar work seems high",
+  ];
+
+  const trustPoints = [
+    "Independent electrical guidance",
+    "Clear, plain-language explanations",
+    "Built to help you understand before you approve work",
+    "No pressure. No upselling. No confusion.",
+  ];
+
+  const steps = [
+    {
+      number: "01",
+      title: "Send your issue",
+      text: "Send a quote, photo, or short WhatsApp message about the problem.",
+    },
+    {
+      number: "02",
+      title: "Get a clear explanation",
+      text: "We help you understand what may be happening and what looks reasonable.",
+    },
+    {
+      number: "03",
+      title: "Decide with confidence",
+      text: "Know your next step before you spend money or call the wrong person.",
+    },
+  ];
+
+  return (
+    <div className="min-h-screen bg-[#07142d] text-white selection:bg-cyan-400/20 selection:text-white">
+      <div className="relative overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(34,211,238,0.18),transparent_28%),radial-gradient(circle_at_85%_20%,rgba(59,130,246,0.18),transparent_24%),radial-gradient(circle_at_50%_80%,rgba(14,165,233,0.08),transparent_28%)]" />
+        <div className="absolute -left-24 top-24 h-72 w-72 rounded-full bg-cyan-400/10 blur-3xl" />
+        <div className="absolute right-0 top-0 h-80 w-80 rounded-full bg-blue-500/10 blur-3xl" />
+
+        <header className="relative z-10 mx-auto flex max-w-7xl items-center justify-between px-6 py-6 lg:px-8">
+          <div className="flex items-center gap-3">
+            <div className="rounded-2xl border border-white/10 bg-white/5 px-3 py-2 shadow-[0_0_30px_rgba(34,211,238,0.08)] backdrop-blur">
+              <img
+                src="/mnt/data/Logo - PIQ .PNG"
+                alt="PowerIQ short logo"
+                className="h-9 w-auto object-contain"
+              />
+            </div>
+            <div className="hidden sm:block">
+              <p className="text-sm font-semibold tracking-[0.35em] text-cyan-300/80">POWERIQ</p>
+              <p className="text-xs text-white/55">Smart Electrical Advice</p>
+            </div>
+          </div>
+
+          <nav className="hidden items-center gap-8 text-sm text-white/70 md:flex">
+            <a href="#services" className="transition hover:text-white">Services</a>
+            <a href="#how-it-works" className="transition hover:text-white">How it works</a>
+            <a href="#pricing" className="transition hover:text-white">Pricing</a>
+          </nav>
+
+          <a
+            href="#contact"
+            className="rounded-full border border-cyan-400/30 bg-cyan-400/10 px-4 py-2 text-sm font-medium text-cyan-100 shadow-[0_0_30px_rgba(34,211,238,0.18)] transition hover:bg-cyan-400/20"
+          >
+            WhatsApp Us
+          </a>
+        </header>
+
+        <section className="relative z-10 mx-auto grid max-w-7xl gap-12 px-6 pb-20 pt-8 lg:grid-cols-[1.15fr_0.85fr] lg:px-8 lg:pb-28 lg:pt-10">
+          <div className="max-w-3xl">
+            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-cyan-400/20 bg-white/5 px-4 py-2 text-sm text-cyan-200 backdrop-blur">
+              <span className="h-2 w-2 rounded-full bg-cyan-300 shadow-[0_0_14px_rgba(103,232,249,0.95)]" />
+              Independent advice for quotes, faults, solar, and inverter issues
+            </div>
+
+            <h1 className="max-w-3xl text-4xl font-semibold leading-tight tracking-tight text-white sm:text-5xl lg:text-6xl">
+              Electrical advice you can trust
+              <span className="block bg-gradient-to-r from-cyan-300 via-blue-300 to-cyan-200 bg-clip-text text-transparent">
+                before you pay or panic.
+              </span>
+            </h1>
+
+            <p className="mt-6 max-w-2xl text-lg leading-8 text-white/70 sm:text-xl">
+              Get help with electrical quotes, breaker trips, inverter warnings, and common fault concerns by WhatsApp. Clear guidance. No upselling. No pressure.
+            </p>
+
+            <div className="mt-8 flex flex-col gap-4 sm:flex-row">
+              <a
+                href="#contact"
+                className="rounded-2xl bg-gradient-to-r from-cyan-400 to-blue-500 px-6 py-4 text-center text-sm font-semibold text-slate-950 shadow-[0_18px_60px_rgba(14,165,233,0.35)] transition hover:scale-[1.01]"
+              >
+                Get help on WhatsApp
+              </a>
+              <a
+                href="#services"
+                className="rounded-2xl border border-white/12 bg-white/5 px-6 py-4 text-center text-sm font-semibold text-white/90 backdrop-blur transition hover:bg-white/10"
+              >
+                View services
+              </a>
+            </div>
+
+            <div className="mt-10 grid gap-4 sm:grid-cols-3">
+              {[
+                "Independent guidance",
+                "Plain-language answers",
+                "Safety-first advice",
+              ].map((item) => (
+                <div
+                  key={item}
+                  className="rounded-2xl border border-white/10 bg-white/5 p-4 text-sm text-white/75 backdrop-blur"
+                >
+                  {item}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="relative">
+            <div className="absolute -inset-4 rounded-[2rem] bg-gradient-to-br from-cyan-400/20 via-blue-500/10 to-transparent blur-2xl" />
+            <div className="relative space-y-4 rounded-[2rem] border border-white/10 bg-white/5 p-5 shadow-[0_20px_80px_rgba(2,12,27,0.6)] backdrop-blur-xl">
+              <div className="rounded-[1.5rem] border border-cyan-400/20 bg-[#091b39]/90 p-5">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-xs uppercase tracking-[0.3em] text-cyan-300/80">PowerIQ</p>
+                    <p className="mt-2 text-xl font-semibold">Quick electrical guidance</p>
+                  </div>
+                  <div className="rounded-2xl border border-cyan-400/20 bg-cyan-400/10 px-3 py-2 text-sm text-cyan-100">
+                    WhatsApp
+                  </div>
+                </div>
+                <div className="mt-5 space-y-3 text-sm">
+                  <div className="ml-auto max-w-[85%] rounded-2xl rounded-tr-md bg-cyan-400/12 px-4 py-3 text-white/85">
+                    Breaker keeps tripping when kettle and microwave are both on. What could cause that?
+                  </div>
+                  <div className="max-w-[90%] rounded-2xl rounded-tl-md border border-white/10 bg-white/5 px-4 py-3 text-white/75">
+                    It may be overload, a weak breaker, or a fault on the circuit. Send a photo of the DB label and tell us what trips. We’ll guide you through basic safe checks only.
+                  </div>
+                </div>
+              </div>
+
+              <div className="grid gap-4 sm:grid-cols-2">
+                <div className="rounded-[1.5rem] border border-white/10 bg-[#0a1831] p-5">
+                  <p className="text-xs uppercase tracking-[0.3em] text-cyan-300/70">Popular</p>
+                  <p className="mt-3 text-lg font-semibold">Fault Finding Assist</p>
+                  <p className="mt-1 text-3xl font-bold text-cyan-300">R120</p>
+                  <p className="mt-3 text-sm text-white/65">15-minute WhatsApp-based guided assessment</p>
+                </div>
+
+                <div className="rounded-[1.5rem] border border-white/10 bg-[#0a1831] p-5">
+                  <p className="text-xs uppercase tracking-[0.3em] text-cyan-300/70">Quote Help</p>
+                  <p className="mt-3 text-lg font-semibold">Quote Check</p>
+                  <p className="mt-1 text-3xl font-bold text-cyan-300">R150</p>
+                  <p className="mt-3 text-sm text-white/65">Plain-language review before you approve work</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
       </div>
 
-      <nav class="nav">
-        <a href="#services">Services</a>
-        <a href="#how-it-works">How it works</a>
-        <a href="#pricing">Pricing</a>
-        <a href="#contact" class="btn btn-primary" style="padding: 11px 16px;">Message on WhatsApp</a>
-      </nav>
-    </div>
-  </header>
-
-  <main>
-    <section class="hero">
-      <div class="container hero-grid">
-        <div class="hero-copy">
-          <div class="eyebrow">Independent WhatsApp-based guidance</div>
-          <h2>
-            Clear <span class="blue">electrical advice</span> before you approve the work.
+      <section id="services" className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
+        <div className="max-w-2xl">
+          <p className="text-sm font-semibold uppercase tracking-[0.3em] text-cyan-300/80">Services</p>
+          <h2 className="mt-4 text-3xl font-semibold tracking-tight text-white sm:text-4xl">
+            Help for quotes, faults, and electrical uncertainty
           </h2>
-          <p class="hero-sub">
-            PowerIQ helps homeowners, landlords and small businesses understand quotes, DB board concerns, inverter questions and electrical recommendations in plain language before money is spent.
+          <p className="mt-4 text-lg text-white/65">
+            Structured support that feels professional, easy to understand, and simple to use.
           </p>
-
-          <div class="hero-points">
-            <div class="point"><span>✓</span> Quote reviews and second opinions</div>
-            <div class="point"><span>✓</span> DB board photo assessments</div>
-            <div class="point"><span>✓</span> Solar and inverter guidance</div>
-            <div class="point"><span>✓</span> Clear answers on WhatsApp</div>
-          </div>
-
-          <div class="hero-actions">
-            <a class="btn btn-primary" href="https://wa.me/27XXXXXXXXX">Message PowerIQ on WhatsApp</a>
-            <a class="btn btn-secondary" href="#services">View services</a>
-          </div>
         </div>
 
-        <aside class="hero-panel">
+        <div className="mt-10 grid gap-6 lg:grid-cols-3">
+          {services.map((service) => (
+            <div
+              key={service.title}
+              className={`group relative overflow-hidden rounded-[2rem] border p-6 backdrop-blur transition hover:-translate-y-1 ${
+                service.featured
+                  ? "border-cyan-400/30 bg-gradient-to-b from-cyan-400/10 to-white/5 shadow-[0_18px_80px_rgba(14,165,233,0.16)]"
+                  : "border-white/10 bg-white/5"
+              }`}
+            >
+              <div className="absolute right-0 top-0 h-28 w-28 rounded-full bg-cyan-300/10 blur-3xl" />
+              {service.featured && (
+                <div className="mb-5 inline-flex rounded-full border border-cyan-300/20 bg-cyan-300/10 px-3 py-1 text-xs font-medium text-cyan-200">
+                  Most practical option
+                </div>
+              )}
+              <div className="relative">
+                <div className="flex items-start justify-between gap-4">
+                  <h3 className="text-2xl font-semibold text-white">{service.title}</h3>
+                  <span className="rounded-2xl border border-cyan-400/20 bg-cyan-400/10 px-3 py-2 text-lg font-semibold text-cyan-200">
+                    {service.price}
+                  </span>
+                </div>
+                <p className="mt-5 text-white/70">{service.desc}</p>
+                <p className="mt-5 text-sm leading-7 text-white/55">{service.detail}</p>
+                <a
+                  href="#contact"
+                  className="mt-8 inline-flex rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-medium text-white/90 transition hover:bg-white/10"
+                >
+                  Select service
+                </a>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section id="how-it-works" className="border-y border-white/8 bg-white/[0.03]">
+        <div className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
+          <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+            <div>
+              <p className="text-sm font-semibold uppercase tracking-[0.3em] text-cyan-300/80">How it works</p>
+              <h2 className="mt-4 text-3xl font-semibold tracking-tight text-white sm:text-4xl">
+                Easy to use. Clear to understand.
+              </h2>
+              <p className="mt-4 max-w-xl text-lg text-white/65">
+                PowerIQ is built for people who want clear guidance before spending money or booking the wrong callout.
+              </p>
+            </div>
+
+            <div className="grid gap-5">
+              {steps.map((step) => (
+                <div
+                  key={step.number}
+                  className="rounded-[1.75rem] border border-white/10 bg-[#09192f] p-6 shadow-[0_15px_60px_rgba(3,7,18,0.38)]"
+                >
+                  <div className="flex items-start gap-5">
+                    <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-cyan-400/20 bg-cyan-400/10 text-sm font-semibold text-cyan-200">
+                      {step.number}
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-semibold text-white">{step.title}</h3>
+                      <p className="mt-3 text-white/65">{step.text}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
+        <div className="grid gap-10 lg:grid-cols-[1fr_1fr] lg:items-start">
           <div>
-            <h3>Built for trust, clarity and better decisions</h3>
-            <p>
-              PowerIQ is designed to give clients a calmer, clearer way to understand electrical work before approving it.
+            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-cyan-300/80">Common issues</p>
+            <h2 className="mt-4 text-3xl font-semibold tracking-tight text-white sm:text-4xl">
+              Problems people often ask about
+            </h2>
+            <p className="mt-4 max-w-xl text-lg text-white/65">
+              This gives clients an instant idea of where PowerIQ can help without making the page feel cluttered.
             </p>
           </div>
 
-          <div class="stat-list">
-            <div class="stat">
-              <strong>Real-world electrical experience behind the guidance</strong>
-              <span>Informed by years of practical work across installations, maintenance, fault-finding, backup power systems and project environments.</span>
-            </div>
-            <div class="stat">
-              <strong>Practical, plain-language explanations</strong>
-              <span>No unnecessary jargon. Just clear guidance on what the quote says, what looks reasonable and what should be clarified.</span>
-            </div>
-            <div class="stat">
-              <strong>Honest limits</strong>
-              <span>PowerIQ supports better decisions, but does not replace onsite emergency electrical work, legal testing or compliance certification.</span>
-            </div>
-          </div>
-        </aside>
-      </div>
-    </section>
-
-    <section class="section section-light" id="services">
-      <div class="container section-card">
-        <div class="section-head">
-          <div class="tag">What PowerIQ helps with</div>
-          <h3>Professional guidance for the questions clients usually struggle with</h3>
-          <p>
-            The service is built around the kinds of decisions people often feel unsure about — especially when comparing quotes, trying to understand recommendations or wanting a second opinion before approving work.
-          </p>
-        </div>
-
-        <div class="grid-3">
-          <div class="info-card">
-            <h4>Quote Reviews</h4>
-            <p>Understand what an electrician’s quote likely includes, what may need clarification and whether the recommendation appears reasonable.</p>
-          </div>
-          <div class="info-card">
-            <h4>DB Board Photo Assessments</h4>
-            <p>Send photos of a visible installation or DB board and receive structured feedback on what stands out and what questions to ask next.</p>
-          </div>
-          <div class="info-card">
-            <h4>Solar & Inverter Guidance</h4>
-            <p>Get help understanding system suggestions, settings, upgrade proposals and common points of confusion before making a decision.</p>
-          </div>
-          <div class="info-card">
-            <h4>Electrical Second Opinions</h4>
-            <p>Useful when something feels unclear, the pricing seems inconsistent or the explanation from a contractor is difficult to understand.</p>
-          </div>
-          <div class="info-card">
-            <h4>COC-Related Guidance</h4>
-            <p>Understand what is usually involved, what should typically be checked and what information may still be needed before work is approved.</p>
-          </div>
-          <div class="info-card">
-            <h4>General WhatsApp Advice</h4>
-            <p>Fast, practical responses for straightforward electrical questions where a clearer explanation can help before taking the next step.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section section-light">
-      <div class="container section-card">
-        <div class="section-head">
-          <div class="tag">Why clients use PowerIQ</div>
-          <h3>Because electrical decisions can feel uncertain, technical and expensive</h3>
-          <p>
-            Many people do not know whether they are being overquoted, whether something is genuinely necessary or which questions they should be asking. PowerIQ exists to make those decisions clearer.
-          </p>
-        </div>
-
-        <div class="grid-2">
-          <div class="checklist">
-            <div class="check-item">
-              <div class="icon">1</div>
-              <div>
-                <strong>Understand the recommendation</strong>
-                Get a plain-language explanation instead of trying to interpret technical wording alone.
+          <div className="grid gap-4 sm:grid-cols-2">
+            {faultExamples.map((item) => (
+              <div
+                key={item}
+                className="rounded-[1.5rem] border border-white/10 bg-white/5 p-5 text-white/80 backdrop-blur"
+              >
+                <div className="mb-4 h-2 w-12 rounded-full bg-gradient-to-r from-cyan-300 to-blue-400" />
+                <p className="text-base font-medium">{item}</p>
               </div>
-            </div>
-            <div class="check-item">
-              <div class="icon">2</div>
-              <div>
-                <strong>Ask better questions</strong>
-                Know what to confirm with the contractor before approving work or paying for upgrades.
-              </div>
-            </div>
-            <div class="check-item">
-              <div class="icon">3</div>
-              <div>
-                <strong>Reduce uncertainty</strong>
-                A second set of informed eyes can help when pricing or recommendations feel unclear.
-              </div>
-            </div>
-          </div>
-
-          <div class="checklist">
-            <div class="check-item">
-              <div class="icon">4</div>
-              <div>
-                <strong>Get guidance quickly</strong>
-                WhatsApp-based support is often easier and faster than trying to organise a call-out immediately.
-              </div>
-            </div>
-            <div class="check-item">
-              <div class="icon">5</div>
-              <div>
-                <strong>Make smarter decisions</strong>
-                The goal is not pressure. The goal is clarity before money is spent.
-              </div>
-            </div>
-            <div class="check-item">
-              <div class="icon">6</div>
-              <div>
-                <strong>Know the limits upfront</strong>
-                PowerIQ is careful about what can and cannot be concluded remotely, which helps the service feel more credible and trustworthy.
-              </div>
-            </div>
+            ))}
           </div>
         </div>
+      </section>
 
-        <div class="trust-band">
-          <div class="trust-item">
-            <h4>Clear pricing</h4>
-            <p>Simple service levels without hidden surprise charges.</p>
-          </div>
-          <div class="trust-item">
-            <h4>Plain language</h4>
-            <p>Guidance designed to be understandable, not overly technical.</p>
-          </div>
-          <div class="trust-item">
-            <h4>Practical experience</h4>
-            <p>Advice shaped by real-world electrical work, not generic scripts.</p>
-          </div>
-          <div class="trust-item">
-            <h4>Honest boundaries</h4>
-            <p>Remote guidance where appropriate, onsite referral where necessary.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section section-light" id="how-it-works">
-      <div class="container section-card">
-        <div class="section-head">
-          <div class="tag">How it works</div>
-          <h3>A simple process designed to remove confusion</h3>
-          <p>
-            The idea is not to complicate the process. It is to make the next decision easier.
-          </p>
-        </div>
-
-        <div class="steps">
-          <div class="step">
-            <div class="step-number">1</div>
-            <h4>Send your question</h4>
-            <p>Send your quote, photos or issue on WhatsApp with enough detail for a proper first review.</p>
-          </div>
-          <div class="step">
-            <div class="step-number">2</div>
-            <h4>PowerIQ reviews it</h4>
-            <p>The information is assessed and the key points are identified in plain language.</p>
-          </div>
-          <div class="step">
-            <div class="step-number">3</div>
-            <h4>Get practical guidance</h4>
-            <p>You receive clear feedback, helpful questions to ask and direction on what may need further checking.</p>
-          </div>
-          <div class="step">
-            <div class="step-number">4</div>
-            <h4>Decide with more confidence</h4>
-            <p>You move forward with better clarity on the work, the quote and the next best step.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="pricing">
-      <div class="container">
-        <div class="section-head" style="margin-bottom: 22px;">
-          <div class="tag" style="background: rgba(255,255,255,0.08); color: #d9e9ff;">Pricing</div>
-          <h3 style="color:#fff;">Simple starting prices for common PowerIQ services</h3>
-          <p style="color: var(--muted);">
-            Pricing can be refined later, but a clear starting structure helps the service feel professional and transparent from the beginning.
-          </p>
-        </div>
-
-        <div class="pricing">
-          <div class="price-card">
-            <div class="label">Starter</div>
-            <h4>Quick Question</h4>
-            <div class="price">R75</div>
-            <p>For a straightforward electrical, DB board or inverter-related question that needs a clear answer.</p>
-            <ul>
-              <li>WhatsApp-based response</li>
-              <li>Plain-language explanation</li>
-              <li>Best for quick clarity</li>
-            </ul>
-          </div>
-
-          <div class="price-card featured">
-            <div class="label">Most useful</div>
-            <h4>Quote Review</h4>
-            <div class="price">R150</div>
-            <p>For checking an electrician’s quote, understanding the recommendation and knowing what to clarify.</p>
-            <ul>
-              <li>Review of quoted work</li>
-              <li>Practical questions to ask</li>
-              <li>Helps compare and understand pricing</li>
-            </ul>
-          </div>
-
-          <div class="price-card">
-            <div class="label">Structured review</div>
-            <h4>DB Board Assessment</h4>
-            <div class="price">R250–R350</div>
-            <p>For photo-based review of visible installations, DB boards or concerns that need a more detailed response.</p>
-            <ul>
-              <li>Photo-based feedback</li>
-              <li>Clear next-step guidance</li>
-              <li>Useful before approving corrective work</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section section-light">
-      <div class="container section-card">
-        <div class="section-head">
-          <div class="tag">Important notes</div>
-          <h3>Clear boundaries help the service feel safer and more trustworthy</h3>
-          <p>
-            One of the biggest trust-builders for a new service is honesty about what it does and does not replace.
-          </p>
-        </div>
-
-        <div class="note-grid">
-          <div class="note">
-            <h4>What PowerIQ is designed for</h4>
-            <ul>
-              <li>Explaining quotes and recommendations in plain language</li>
-              <li>Giving a second opinion before work is approved</li>
-              <li>Helping clients ask better questions</li>
-              <li>Providing practical general guidance based on the information supplied</li>
-            </ul>
-          </div>
-
-          <div class="note warning">
-            <h4>What PowerIQ does not replace</h4>
-            <ul>
-              <li>Emergency fault attendance or dangerous live situations</li>
-              <li>Onsite diagnosis where physical testing is required</li>
-              <li>Compliance certification or legally required inspections</li>
-              <li>A qualified electrician attending when the issue is unsafe or urgent</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="cta" id="contact">
-      <div class="container">
-        <div class="cta-box">
-          <div>
-            <h3>Get clarity before you spend.</h3>
-            <p>
-              Send your quote, photos or question on WhatsApp and get practical electrical guidance designed to help you make a more confident decision.
+      <section id="pricing" className="border-y border-white/8 bg-white/[0.03]">
+        <div className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
+          <div className="text-center">
+            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-cyan-300/80">Pricing</p>
+            <h2 className="mt-4 text-3xl font-semibold tracking-tight text-white sm:text-4xl">
+              Simple pricing clients can understand quickly
+            </h2>
+            <p className="mx-auto mt-4 max-w-2xl text-lg text-white/65">
+              Clear pricing removes hesitation. Each option is designed to be easy to understand before the client even sends a message.
             </p>
           </div>
-          <a class="btn btn-primary" href="https://wa.me/27632897384">Message PowerIQ on WhatsApp</a>
-        </div>
-      </div>
-    </section>
-  </main>
 
-  <footer class="footer">
-    <div class="container footer-grid">
-      <div>© PowerIQ</div>
-      <div>Smart Electrical Advice • WhatsApp-based guidance • Clear practical support</div>
+          <div className="mt-12 grid gap-6 lg:grid-cols-3">
+            {services.map((service) => (
+              <div
+                key={service.title + "pricing"}
+                className={`rounded-[2rem] border p-7 ${
+                  service.featured
+                    ? "border-cyan-400/30 bg-gradient-to-b from-cyan-400/10 to-white/5 shadow-[0_18px_70px_rgba(14,165,233,0.14)]"
+                    : "border-white/10 bg-white/5"
+                }`}
+              >
+                <h3 className="text-xl font-semibold text-white">{service.title}</h3>
+                <p className="mt-4 text-4xl font-bold text-cyan-300">{service.price}</p>
+                <p className="mt-4 text-white/65">{service.detail}</p>
+                <a
+                  href="#contact"
+                  className="mt-8 inline-flex w-full justify-center rounded-2xl bg-white/8 px-5 py-4 text-sm font-semibold text-white transition hover:bg-white/12"
+                >
+                  Choose {service.title}
+                </a>
+              </div>
+            ))}
+          </div>
+
+          <p className="mx-auto mt-8 max-w-3xl text-center text-sm leading-7 text-white/45">
+            For safety, guidance is limited to basic safe checks only. PowerIQ does not instruct unsafe work, opening DB boards, or hazardous electrical handling by clients.
+          </p>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
+        <div className="grid gap-8 rounded-[2rem] border border-white/10 bg-gradient-to-br from-white/6 to-white/[0.03] p-8 shadow-[0_18px_80px_rgba(2,12,27,0.55)] lg:grid-cols-[0.9fr_1.1fr] lg:p-10">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-cyan-300/80">Why PowerIQ</p>
+            <h2 className="mt-4 text-3xl font-semibold tracking-tight text-white sm:text-4xl">
+              Built to make electrical decisions easier
+            </h2>
+            <p className="mt-4 max-w-xl text-lg text-white/65">
+              The service is designed to help clients feel more informed, less rushed, and more confident when dealing with electrical work, fault concerns, or quote approvals.
+            </p>
+          </div>
+
+          <div className="grid gap-4 sm:grid-cols-2">
+            {trustPoints.map((point) => (
+              <div
+                key={point}
+                className="rounded-[1.5rem] border border-white/10 bg-[#09182f] p-5 text-white/80"
+              >
+                <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl border border-cyan-400/20 bg-cyan-400/10 text-cyan-200">
+                  ✓
+                </div>
+                <p className="font-medium">{point}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="contact" className="mx-auto max-w-7xl px-6 pb-24 lg:px-8">
+        <div className="relative overflow-hidden rounded-[2.25rem] border border-cyan-400/20 bg-gradient-to-r from-[#081730] via-[#0a1e40] to-[#0c2248] p-8 shadow-[0_20px_80px_rgba(14,165,233,0.12)] lg:p-12">
+          <div className="absolute right-0 top-0 h-60 w-60 rounded-full bg-cyan-400/10 blur-3xl" />
+          <div className="relative z-10 grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
+            <div>
+              <div className="mb-5">
+                <img
+                  src="/mnt/data/Logo - PowerIQ(5).PNG"
+                  alt="PowerIQ logo"
+                  className="h-14 w-auto object-contain sm:h-16"
+                />
+              </div>
+              <h2 className="text-3xl font-semibold tracking-tight text-white sm:text-4xl">
+                Ready to get clear electrical advice?
+              </h2>
+              <p className="mt-4 max-w-2xl text-lg text-white/70">
+                Send your quote, fault question, or inverter concern on WhatsApp and get practical guidance in plain language.
+              </p>
+            </div>
+
+            <div className="flex flex-col gap-3">
+              <a
+                href="https://wa.me/27632897384"
+                className="rounded-2xl bg-gradient-to-r from-cyan-400 to-blue-500 px-7 py-4 text-center text-sm font-semibold text-slate-950 shadow-[0_18px_60px_rgba(14,165,233,0.35)] transition hover:scale-[1.01]"
+              >
+                Start on WhatsApp
+              </a>
+              <a
+                href="#pricing"
+                className="rounded-2xl border border-white/12 bg-white/5 px-7 py-4 text-center text-sm font-semibold text-white/90 transition hover:bg-white/10"
+              >
+                View pricing first
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer className="border-t border-white/8 bg-[#061126]">
+        <div className="mx-auto flex max-w-7xl flex-col gap-4 px-6 py-8 text-sm text-white/45 lg:flex-row lg:items-center lg:justify-between lg:px-8">
+          <div className="flex items-center gap-3">
+            <img
+              src="/mnt/data/Logo - PIQ .PNG"
+              alt="PowerIQ icon"
+              className="h-8 w-auto object-contain"
+            />
+            <span>PowerIQ • Smart Electrical Advice</span>
+          </div>
+          <p>Clear electrical guidance for quotes, faults, solar, and inverter concerns.</p>
+        </div>
+      </footer>
     </div>
-  </footer>
-
-</body>
-</html>
+  );
+}
