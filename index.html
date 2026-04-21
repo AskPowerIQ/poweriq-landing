@@ -115,9 +115,14 @@
       gap: 14px;
       min-width: 0;
     }
+    .wa-icon {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+}
 
  .brand img {
-  height: 68px;
+  height: 78px;
   width: auto;
   object-fit: contain;
   flex-shrink: 0;
@@ -170,12 +175,12 @@
 .btn-primary {
   background: #25D366;
   color: white;
-  box-shadow: 0 12px 30px rgba(37, 211, 102, 0.28);
+  box-shadow: 0 12px 28px rgba(37, 211, 102, 0.24);
   border: none;
 }
 
 .btn-primary:hover {
-  background: #20bd5a;
+  background: #22c55e;
   transform: translateY(-1px);
 }
 
@@ -900,12 +905,6 @@
       <div class="container hero-grid">
         <div>
 
-          <img
-            class="hero-logo"
-            src="poweriq-long-logo.png.PNG"
-            alt="PowerIQ full logo"
-          />
-
           <h1>
             Get clarity before you approve electrical work
             <span class="gradient-text">or panic about a fault.</span>
@@ -919,11 +918,12 @@
 
           <div class="hero-actions">
             <a
-              class="btn btn-primary"
-              href="https://wa.me/27632897384?text=Hi%20PowerIQ.%20I%20would%20like%20help%20with%20an%20electrical%20question%2C%20fault%2C%20or%20quote."
-            >
-              Start on WhatsApp
-            </a>
+  class="btn btn-primary desktop-only"
+  href="https://wa.me/27632897384?text=Hi%20PowerIQ.%20I%20would%20like%20help%20with%20an%20electrical%20question%2C%20fault%2C%20or%20quote."
+>
+  <img src="whatsapp-icon.png" alt="WhatsApp" class="wa-icon">
+  WhatsApp Us
+</a>
             <a class="btn btn-secondary" href="#services">View services</a>
           </div>
 
