@@ -92,21 +92,22 @@
     }
 
     .topbar {
-      position: sticky;
-      top: 0;
-      z-index: 20;
-      backdrop-filter: blur(12px);
-      background: rgba(6, 18, 38, 0.72);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-    }
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  backdrop-filter: blur(16px);
+  background: rgba(5, 16, 34, 0.84);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+}
 
-    .nav {
-      min-height: 78px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-    }
+.nav {
+  min-height: 96px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+}
 
     .brand {
       display: flex;
@@ -115,12 +116,12 @@
       min-width: 0;
     }
 
-    .brand img {
-      height: 42px;
-      width: auto;
-      object-fit: contain;
-      flex-shrink: 0;
-    }
+ .brand img {
+  height: 68px;
+  width: auto;
+  object-fit: contain;
+  flex-shrink: 0;
+}
 
     .brand-text strong {
       display: block;
@@ -138,16 +139,17 @@
     }
 
     .nav-links {
-      display: flex;
-      gap: 28px;
-      align-items: center;
-    }
+  display: flex;
+  gap: 36px;
+  align-items: center;
+}
 
     .nav-links a {
-      font-size: 14px;
-      color: rgba(255, 255, 255, 0.76);
-      transition: 0.2s ease;
-    }
+  font-size: 15px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.8);
+  transition: 0.2s ease;
+}
 
     .nav-links a:hover {
       color: #fff;
@@ -165,21 +167,27 @@
       transition: 0.2s ease;
       cursor: pointer;
     }
-
-    .btn-primary {
+.btn-primary {
   background: #25D366;
   color: white;
-  box-shadow: 0 10px 30px rgba(37, 211, 102, 0.3);
+  box-shadow: 0 12px 30px rgba(37, 211, 102, 0.28);
+  border: none;
 }
 
 .btn-primary:hover {
-  background: #1ebe5d;
+  background: #20bd5a;
+  transform: translateY(-1px);
 }
 
-    .btn-primary:hover {
-      transform: translateY(-1px);
-    }
+.btn-secondary {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.05);
+  color: #fff;
+}
 
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
     .btn-secondary {
       border: 1px solid rgba(255, 255, 255, 0.12);
       background: rgba(255, 255, 255, 0.05);
@@ -190,9 +198,9 @@
       background: rgba(255, 255, 255, 0.1);
     }
 
-    .hero {
-      padding: 42px 0 84px;
-    }
+   .hero {
+  padding: 68px 0 84px;
+}
 
     .hero-grid {
       display: grid;
@@ -224,12 +232,12 @@
       flex-shrink: 0;
     }
 
-    .hero-logo {
-      height: 72px;
-      width: auto;
-      object-fit: contain;
-      margin-bottom: 26px;
-    }
+   .hero-logo {
+  height: 92px;
+  width: auto;
+  object-fit: contain;
+  margin-bottom: 30px;
+}
 
     h1 {
       font-size: clamp(40px, 6vw, 68px);
@@ -866,7 +874,7 @@
   <header class="topbar">
     <div class="container nav">
       <a href="#top" class="brand">
-        <img src="poweriq-long-logo.png.PNG" alt="PowerIQ logo" style="height:52px;">
+        <img src="poweriq-long-logo.png.PNG" alt="PowerIQ logo">
       </a>
 
       <button class="mobile-menu-btn" id="menuBtn" aria-label="Open menu">☰</button>
@@ -877,11 +885,11 @@
         <a href="#pricing">Pricing</a>
         <a href="#contact">Contact</a>
       </nav>
-
-    <a
+      <a
   class="btn btn-primary desktop-only"
   href="https://wa.me/27632897384?text=Hi%20PowerIQ.%20I%20would%20like%20help%20with%20an%20electrical%20question%2C%20fault%2C%20or%20quote."
 >
+  <span style="font-size:15px; line-height:1;">💬</span>
   WhatsApp Us
 </a>
     </div>
