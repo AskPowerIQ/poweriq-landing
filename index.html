@@ -167,10 +167,14 @@
     }
 
     .btn-primary {
-      background: linear-gradient(90deg, var(--blue), var(--blue-2));
-      color: #061226;
-      box-shadow: 0 18px 50px rgba(30, 200, 255, 0.25);
-    }
+  background: #25D366;
+  color: white;
+  box-shadow: 0 10px 30px rgba(37, 211, 102, 0.3);
+}
+
+.btn-primary:hover {
+  background: #1ebe5d;
+}
 
     .btn-primary:hover {
       transform: translateY(-1px);
@@ -862,11 +866,7 @@
   <header class="topbar">
     <div class="container nav">
       <a href="#top" class="brand">
-        <img src="poweriq-short-logo.png.PNG" alt="PowerIQ short logo" />
-        <div class="brand-text">
-          <strong>PowerIQ</strong>
-          <span>Smart Electrical Advice</span>
-        </div>
+        <img src="poweriq-long-logo.png.PNG" alt="PowerIQ logo" style="height:52px;">
       </a>
 
       <button class="mobile-menu-btn" id="menuBtn" aria-label="Open menu">☰</button>
@@ -879,7 +879,7 @@
       </nav>
 
       <a
-        class="btn btn-secondary desktop-only"
+        class="btn btn-primary desktop-only" ...>
         href="https://wa.me/27632897384?text=Hi%20PowerIQ.%20I%20would%20like%20help%20with%20an%20electrical%20question%2C%20fault%2C%20or%20quote."
       >
         WhatsApp Us
@@ -891,9 +891,6 @@
     <section class="hero">
       <div class="container hero-grid">
         <div>
-          <div class="hero-badge">
-            Trusted guidance for quotes, faults, solar, and inverter concerns
-          </div>
 
           <img
             class="hero-logo"
