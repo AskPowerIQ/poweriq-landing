@@ -203,9 +203,23 @@
       background: rgba(255, 255, 255, 0.1);
     }
 
-   .hero {
+    .hero {
   padding: 56px 0 40px;
 }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(30, 200, 255, 0.12);
+      border: 1px solid rgba(30, 200, 255, 0.3);
+      color: #d9f8ff;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 18px;
+    }
 
     .hero-grid {
       display: grid;
@@ -504,6 +518,18 @@
       margin-bottom: 14px;
     }
 
+    .service-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 14px;
+      font-size: 20px;
+      background: rgba(30, 200, 255, 0.14);
+      border: 1px solid rgba(30, 200, 255, 0.22);
+    }
+
     .card-top h3 {
       margin: 0;
       font-size: 26px;
@@ -666,6 +692,18 @@
       text-align: center;
       font-size: 14px;
       color: var(--soft);
+    }
+
+    .tc-list {
+      margin: 0;
+      padding-left: 20px;
+      color: var(--muted);
+      display: grid;
+      gap: 12px;
+    }
+
+    .tc-list li::marker {
+      color: var(--blue-3);
     }
 
     .cta-box {
@@ -907,8 +945,10 @@
 
       <nav class="nav-links" id="navLinks">
         <a href="#services">Services</a>
+        <a href="#new-services">New services</a>
         <a href="#how-it-works">How it works</a>
         <a href="#pricing">Pricing</a>
+        <a href="#terms">T&amp;Cs</a>
         <a href="#contact">Contact</a>
       </nav>
     <a
@@ -936,6 +976,7 @@
     <section class="hero">
       <div class="container hero-grid">
         <div>
+          <div class="hero-badge">Upgraded visuals • New service options • Updated terms</div>
 
           <h1>
             Get clarity before you approve electrical work
@@ -1052,6 +1093,7 @@
 
         <div class="services-grid">
           <article class="service-card">
+            <div class="service-icon">⚡</div>
             <div class="card-top">
               <h3>Quick Question</h3>
               <div class="price-pill">R50</div>
@@ -1071,6 +1113,7 @@
           </article>
 
           <article class="service-card featured">
+            <div class="service-icon">🛠️</div>
             <div class="service-tag">Most practical</div>
             <div class="card-top">
               <h3>Quick Fault Guide</h3>
@@ -1091,6 +1134,7 @@
           </article>
 
           <article class="service-card">
+            <div class="service-icon">🔎</div>
             <div class="card-top">
               <h3>Fault Finding Assist</h3>
               <div class="price-pill">R120</div>
@@ -1109,6 +1153,7 @@
             </a>
           </article>
         <article class="service-card">
+  <div class="service-icon">📈</div>
   <div class="card-top">
     <h3>Electricity Monthly Bill Review</h3>
     <div class="price-pill">R150</div>
@@ -1130,6 +1175,7 @@
 </article>
 
           <article class="service-card">
+            <div class="service-icon">🧾</div>
             <div class="card-top">
               <h3>Electrical & Solar Quote Review</h3>
               <div class="price-pill">R150</div>
@@ -1146,6 +1192,77 @@
             >
               Choose Quote Check
             </a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="new-services" class="section">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">New services</span>
+          <h2>Latest upgrades clients asked for</h2>
+          <p>
+            These new options expand support beyond urgent faults so clients can plan smarter and save over time.
+          </p>
+        </div>
+
+        <div class="services-grid">
+          <article class="service-card featured">
+            <div class="service-tag">New</div>
+            <div class="service-icon">🤖</div>
+            <div class="card-top">
+              <h3>AI Energy Savings Plan</h3>
+              <div class="price-pill">R180</div>
+            </div>
+            <p>
+              Get a custom WhatsApp action plan using your bill, usage habits, and backup setup.
+            </p>
+            <p class="detail">
+              Includes practical changes for daytime usage, inverter settings, and appliance scheduling.
+            </p>
+          </article>
+
+          <article class="service-card">
+            <div class="service-icon">🧰</div>
+            <div class="card-top">
+              <h3>Home Electrical Health Check</h3>
+              <div class="price-pill">R220</div>
+            </div>
+            <p>
+              A structured remote review for recurring nuisance trips, old boards, and safety blind spots.
+            </p>
+            <p class="detail">
+              Ideal before renovations, solar expansion, or major appliance purchases.
+            </p>
+          </article>
+
+          <article class="service-card">
+            <div class="service-icon">🔋</div>
+            <div class="card-top">
+              <h3>Solar + Battery Setup Optimizer</h3>
+              <div class="price-pill">R240</div>
+            </div>
+            <p>
+              Guidance for battery charging windows, load priorities, and backup runtime goals.
+            </p>
+            <p class="detail">
+              Focused on better performance and clearer understanding of what your system can realistically do.
+            </p>
+          </article>
+
+          <article class="service-card">
+            <div class="service-icon">📅</div>
+            <div class="card-top">
+              <h3>Monthly PowerIQ Care</h3>
+              <div class="price-pill">R299/mo</div>
+            </div>
+            <p>
+              Ongoing WhatsApp support for recurring questions, monthly bill checks, and priority replies.
+            </p>
+            <p class="detail">
+              Best for homes or small businesses that want ongoing confidence, not one-off advice.
+            </p>
           </article>
         </div>
       </div>
@@ -1291,6 +1408,29 @@
           For safety, guidance is limited to basic safe checks only. PowerIQ does not instruct clients to open DB boards,
           perform hazardous electrical work, or handle dangerous equipment themselves.
         </p>
+      </div>
+    </section>
+
+    <section id="terms" class="section section-muted">
+      <div class="container two-col">
+        <div class="section-head" style="margin-bottom:0;">
+          <span class="eyebrow">Terms &amp; Conditions</span>
+          <h2>Simple service terms before you start</h2>
+          <p>
+            Quick summary terms are shown here for transparency. Full terms can be shared by WhatsApp before payment.
+          </p>
+        </div>
+
+        <div class="authority-card">
+          <ul class="tc-list">
+            <li>PowerIQ provides advisory guidance only and does not replace on-site inspections by a qualified electrician.</li>
+            <li>Clients must never open DB boards or handle dangerous equipment unless legally qualified and safe to do so.</li>
+            <li>Advice quality depends on the accuracy of client information, photos, and message details submitted.</li>
+            <li>Fees cover consultation time and analysis; digital advisory services are generally non-refundable once delivered.</li>
+            <li>Emergency hazards (smoke, burning smell, shocks, exposed live parts) require immediate local emergency response.</li>
+            <li>By using the service, clients accept these limits and agree to use guidance responsibly and safely.</li>
+          </ul>
+        </div>
       </div>
     </section>
 
